@@ -1,6 +1,7 @@
 stages:
     - build
     - test
+    - deploy-prod
 
 build-job:
   stage: build
