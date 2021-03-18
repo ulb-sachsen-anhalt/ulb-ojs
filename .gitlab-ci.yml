@@ -1,15 +1,26 @@
+stages:
+    - build
+    - test
+
 build-job:
   stage: build
+  tags:
+    - ulb-ojs
+
   script:
     - echo "Hello, $GITLAB_USER_LOGIN!"
 
 test-job1:
   stage: test
+  tags:
+    - ulb-ojs  
   script:
     - echo "This job tests something"
 
 test-job2:
   stage: test
+  tags:
+    - ulb-ojs  
   script:
     - echo "This job tests something, but takes more time than test-job1."
     - echo "After the echo commands complete, it runs the sleep command for 20 seconds"
