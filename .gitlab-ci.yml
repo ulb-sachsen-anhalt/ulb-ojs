@@ -30,5 +30,7 @@ test-job2:
 
 deploy-prod:
   stage: deploy
+  tags:
+    - ulb-ojs
   script:
     - echo "This job deploys something from the $CI_COMMIT_BRANCH branch."
