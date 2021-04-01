@@ -1,7 +1,5 @@
 stages:
     - build
-    - test
-    - deploy
 
 build-job:
   stage: build
@@ -9,6 +7,6 @@ build-job:
     - ulb-ojs
 
   script:
-    - echo "Hello, $GITLAB_USER_LOGIN!"
-    - ./create-image.sh
+    - echo "Install OJS"
+    - ./create-image.sh ${DB_NAME} ${DB_USER} ${DB_PASS}
 
