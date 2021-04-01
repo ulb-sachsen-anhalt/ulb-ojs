@@ -10,8 +10,8 @@ echo start with DB: $DB_NAME, $DB_USER, DB_PASS
 
 VERSION=main
 PHP_TAIL=/alpine/apache/php
-# OJS_GIT=https://github.com/pkp/docker-ojs.git
-OJS_ULB=git@git.itz.uni-halle.de:ulb/ulb-ojs.git
+OJS_GIT=https://github.com/pkp/docker-ojs.git
+# OJS_ULB=git@git.itz.uni-halle.de:ulb/ulb-ojs.git
 
 
 git clone ${OJS_GIT} || echo "'${OJS_GIT}' just here"
