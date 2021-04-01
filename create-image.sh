@@ -2,11 +2,36 @@
 
 set -eu
 
-IMAGE=testimage
-DOCKER_CONF=Dockerfile
+DB_NAME=$1
+DB_USER=$2
+DB_PASS=$3
 
-docker build --no-cache \
-    --tag "${IMAGE}" \
-    -f ${DOCKER_CONF} .
+echo start with DB: $DB_NAME, $DB_USER, DB_PASS 
 
-docker run -dit --name containertest -p 8080:80 ${IMAGE}
+VERSION=main
+PHP_TAIL=/alpine/apache/php
+OJS_GIT=https://github.com/pkp/docker-ojs.git
+OJS_ULB=git@git.itz.uni-halle.de:ulb/ulb-ojs.git
+
+echo $
+
+git clone ${OJS_GIT} || echo "'${OJS_GIT}' just here"
+git clone ${OJS_ULB} || echo "'${OJS_ULB}' just here"
+
+mkdir -p volumes/config
+cp ./ojs.config.inc.php volumes/config/
+mkdir -p volumes/db
+mkdir -p volumes/logs
+mkdir -p volumes/migration
+mkdir -p volumes/private
+mkdir -p volumes/public
+
+OJS_HOME=$(find ./docker-ojs -type d -name ${VERSION})
+OJS_HOME=$OJS_HOME$PHP_TAIL
+if [ -z "$OJS_HOME$" ] ; then echo "**OJS Version $VERSION not found!**"; 
+    else echo "Version '$VERSION' found --> $OJS_HOME"; fi
+
+#start OJS
+
+docker-compose --file ./docker-compose-ulb.yml up
+                  
