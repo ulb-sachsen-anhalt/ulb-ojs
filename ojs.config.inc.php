@@ -26,6 +26,9 @@
 
 ; Set this to On once the system has been installed
 ; (This is generally done automatically by the installer)
+; ULB Info hier muss eingegriffen werden, wenn die DB installiert ist!  todo
+; sonst startet immer wieder die Installroutine   
+;installed = Off
 installed = On
 
 ; The canonical URL to the OJS installation (excluding the trailing slash)
@@ -127,9 +130,9 @@ sitewide_privacy_statement = Off
 ;;;;;;;;;;;;;;;;;;;;;
 
 [database]
-
+; ULB host muss den containernamen bekommen!! todo
 driver = mysqli
-host = ojs_db_journal
+host = ojs_db_ulb
 username = ojs
 password = ojs
 name = ojs
