@@ -23,6 +23,7 @@ services:
       MYSQL_PASSWORD: "${MYSQL_PASSWORD:-ojs}"
     volumes:
 #      - ./volumes/db:/var/lib/mysql
+      - /tmp/volumes/db:/var/lib/mysql
       - ./volumes/logs/db:/var/log/mysql
       - ./volumes/config/db.charset.conf:/etc/mysql/conf.d/charset.cnf
       - ./volumes/migration:/docker-entrypoint-initdb.d
