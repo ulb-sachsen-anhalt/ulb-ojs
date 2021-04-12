@@ -42,6 +42,6 @@ echo try start docker-compose with docker-compose-ulb.yml
 
 docker-compose --file ./docker-compose-ulb.yml down
 
-docker-compose --file ./docker-compose-ulb.yml up &
+docker-compose --file ./docker-compose-ulb.yml up
 
 
