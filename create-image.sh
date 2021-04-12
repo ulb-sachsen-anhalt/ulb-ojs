@@ -22,7 +22,11 @@ mkdir -p volumes/db
 mkdir -p volumes/logs
 mkdir -p volumes/migration
 mkdir -p volumes/private
+chmod 777 volumes/private
 mkdir -p volumes/public
+chmod 777 volumes/public 
+
+
 
 OJS_HOME=$(find ./docker-ojs -type d -name ${VERSION})
 OJS_HOME=$OJS_HOME$PHP_TAIL
