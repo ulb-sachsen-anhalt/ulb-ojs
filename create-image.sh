@@ -40,4 +40,8 @@ cp $OJS_HOME/exclude.list .
 echo try start docker-compose with docker-compose-ulb.yml
 #start OJS
 
-docker-compose --file ./docker-compose-ulb.yml up
+docker-compose --file ./docker-compose-ulb.yml down
+
+docker-compose --file ./docker-compose-ulb.yml up &
+
+
