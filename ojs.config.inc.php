@@ -26,8 +26,8 @@
 
 ; Set this to On once the system has been installed
 ; (This is generally done automatically by the installer)
-; ULB Info hier muss eingegriffen werden, wenn die DB installiert ist!  todo
-; sonst startet immer wieder die Installroutine   
+; ULB Info hier muss eingegriffen werden, wenn die DB installiert ist!
+; TODO: sonst startet immer wieder die Installroutine   
 ;installed = Off
 installed = On
 
@@ -189,7 +189,7 @@ web_cache_hours = 1
 [i18n]
 
 ; Default locale
-locale = en_US
+locale = de_DE
 
 ; Client output/input character set
 client_charset = utf-8
