@@ -12,5 +12,5 @@ docker-compose-ulb.yml  (host, port pwd, etc) Anpassen!
 
 TODO: 
 
-- Daten in ./volumes/db ablegen
+- Daten in /home/ojs/volumes/db ablegen
 - Datenbank update
