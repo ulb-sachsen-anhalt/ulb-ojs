@@ -10,7 +10,7 @@ echo start with DB: $DB_NAME, $DB_USER, DB_PASS
 
 source .env
 
-echo We are using OJS  Version:${OJS_VERSION} 
+echo We are using OJS  Version =>${OJS_VERSION} 
 PHP_TAIL=/alpine/apache/php
 OJS_GIT=https://github.com/pkp/docker-ojs.git
 
@@ -28,7 +28,7 @@ if [ -z "$OJS_HOME$" ] ; then echo "**OJS Version $VERSION not found!**";
 echo copy $OJS_HOME/Dockerfile .
 cp $OJS_HOME/Dockerfile .
 
-echo copy $OJS_HOME/exclude.list
+echo copy $OJS_HOME/exclude.list .
 cp $OJS_HOME/exclude.list .
 
 
