@@ -31,7 +31,7 @@ services:
     restart: always
 
   ojs:
-    image: pkpofficial/ojs:main
+    image: pkpofficial/ojs:${OJS_VERSION} 
     env_file:
       - .env
     container_name: "ojs_app_ulb"
