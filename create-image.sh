@@ -16,16 +16,7 @@ OJS_GIT=https://github.com/pkp/docker-ojs.git
 git clone ${OJS_GIT} || echo "'${OJS_GIT}' just here"
 
 
-mkdir -p volumes/config
-cp ./ojs.config.inc.php volumes/config/
-mkdir -p volumes/db
-mkdir -p volumes/logs
-mkdir -p volumes/migration
-mkdir -p volumes/private
-chmod 777 volumes/private
-mkdir -p volumes/public
-chmod 777 volumes/public 
-
+mkdir -pv /home/ojs/volumes/config && cp ojs.config.inc.php /home/ojs/volumes/config/
 
 
 OJS_HOME=$(find ./docker-ojs -type d -name ${VERSION})
