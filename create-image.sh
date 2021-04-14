@@ -18,7 +18,6 @@ git clone ${OJS_GIT} || echo "'${OJS_GIT}' just here"
 
 mkdir -pv /home/ojs/volumes/config && cp ojs.config.inc.php /home/ojs/volumes/config/
 
-
 OJS_HOME=$(find ./docker-ojs -type d -name ${VERSION})
 OJS_HOME=$OJS_HOME$PHP_TAIL
 if [ -z "$OJS_HOME$" ] ; then echo "**OJS Version $VERSION not found!**";
