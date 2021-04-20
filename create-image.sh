@@ -2,15 +2,10 @@
 
 set -eu
 
-DB_NAME=$1
-DB_USER=$2
-DB_PASS=$3
-
-echo start with DB: $DB_NAME, $DB_USER, DB_PASS
 
 source .env
 
-echo We are using OJS  Version =>${OJS_VERSION} 
+echo We are using OJS  Version: ${OJS_VERSION} 
 PHP_TAIL=/alpine/apache/php
 OJS_GIT=https://github.com/pkp/docker-ojs.git
 
