@@ -8,5 +8,4 @@ build-job:
 
   script:
     - echo "Install OJS"
-    - ./create-image.sh ${DB_NAME} ${DB_USER} ${DB_PASS}
-
+    - ./create-image.sh $DB_PASS

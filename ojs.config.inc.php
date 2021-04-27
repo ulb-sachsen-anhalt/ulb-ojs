@@ -284,7 +284,7 @@ allowed_html = "a[href|target|title],em,strong,cite,code,ul,ol,li[class],dl,dt,d
 
 ;implicit_auth_header_first_name = HTTP_GIVENNAME
 ;implicit_auth_header_last_name = HTTP_SN
-;implicit_auth_header_email = HTTP_MAIL
+;implicit_auth_header_email := HTTP_MAIL
 ;implicit_auth_header_phone = HTTP_TELEPHONENUMBER
 ;implicit_auth_header_initials = HTTP_METADATA_INITIALS
 ;implicit_auth_header_mailing_address = HTTP_METADATA_HOMEPOSTALADDRESS
