@@ -1,0 +1,2 @@
+docker-compose -f docker-compose-ulb.yml down
+docker-compose -f docker-compose-ulb.yml up -d
