@@ -2,6 +2,13 @@
 
 set -eu
 
+if [ $# -eq 0 ]
+  then
+    echo "Please pass root password for mysqldump, otherwise no dump file will be created"
+    set -- "no-pwd"
+fi
+
+
 DB_PASS=$1
 
 source .env
@@ -10,11 +17,13 @@ echo We are using OJS  Version ${OJS_VERSION}  data in: ${PROJECT_DATA_ROOT}
 PHP_TAIL=/alpine/apache/php
 OJS_GIT=https://github.com/pkp/docker-ojs.git
 
+if [ -d "docker-ojs" ]; then
+    echo "docker-ojs found"
+else    
+    git clone ${OJS_GIT} || echo "'${OJS_GIT}' just here"
+fi
 
-git clone ${OJS_GIT} || echo "'${OJS_GIT}' just here"
-
-
-cp -v ojs.config.inc.php ${PROJECT_DATA_ROOT}/volumes/config/
+cp -v ojs.config.inc.php ${PROJECT_DATA_ROOT}/config/
 
 
 OJS_HOME=$(find ./docker-ojs -type d -name ${OJS_VERSION})
@@ -41,10 +50,13 @@ docker-compose --file ./docker-compose-ulb.yml up -d
 # copy uni favicon
 docker cp favicon.ico ojs_app_ulb:/var/www/html/favicon.ico
 
-echo dump OJS database ${PROJECT_DATA_ROOT}/volumes/sqldumps/$(date +"%Y-%m-%d")_${OJS_VERSION}_ojs.sql
+echo dump OJS database ${PROJECT_DATA_ROOT}/sqldumps/$(date +"%Y-%m-%d")_${OJS_VERSION}_ojs.sql
 
-backup=${PROJECT_DATA_ROOT}/volumes/sqldumps/$(date +"%Y-%m-%d")_${OJS_VERSION}_ojs.sql
-docker exec ojs_db_ulb mysqldump -p${DB_PASS} ojs > $backup  && echo "backup successfull" || rm ${backup}
+backup=${PROJECT_DATA_ROOT}/sqldumps/$(date +"%Y-%m-%d")_${OJS_VERSION}_ojs
 
-# wieder einspielen, falls notwendig
-# sudo cat YYYY-MM-DD_ojs.sql | sudo docker exec -i ojs_db_ulb mysql -pPWD ojs
+docker exec ojs_db_ulb mysqldump -p${DB_PASS} ojs > $backup && \
+    echo "backup successfull:" $(du -h $backup) && mv "$backup" "$backup".sql || \
+    if [ -f "$backup" ]; then 
+         rm "$backup"
+         echo "backup fails, delete empty dump"
+    fi
