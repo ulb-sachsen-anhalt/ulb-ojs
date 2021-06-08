@@ -4,15 +4,15 @@ echo "upgrade ojs from version 3.1.1.2 up to 3_3_0-6"
 
 echo "drop database ojs"
 
-echo  "drop database ojs;" | docker exec -i ojs_db_ulb mysql -proot
+echo  "drop database ojs;" | docker exec -i ojs_db_ulb mysql -pxxx
 
 echo "create database ojs"
 
-echo  "create database ojs;" | docker exec -i ojs_db_ulb mysql -proot
+echo  "create database ojs;" | docker exec -i ojs_db_ulb mysql -pxxx
 
 echo "recreate last ojs db form version 3.1.1.2 dump"
 
-cat /data/ojs/sqldumps/ojs.sql | docker exec -i ojs_db_ulb mysql -proot ojs
+cat /data/ojs/sqldumps/ojs.sql | docker exec -i ojs_db_ulb mysql -pxxx ojs
 
 versions_steps=(
     3_1_2-0
