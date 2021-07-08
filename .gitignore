@@ -1,2 +1,6 @@
 venv/
+root/
+Dockerfile
 ojs.config.inc.php.original.donotcommit
+ojs.*
+exclude.list
