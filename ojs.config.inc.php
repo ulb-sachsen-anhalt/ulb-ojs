@@ -58,15 +58,24 @@ scheduled_tasks = Off
 ; time zones.
 ; I.e.:
 ; <entry key="Europe/Amsterdam" name="Amsterdam" />
-; time_zone="Amsterdam"
-time_zone = "UTC"
+time_zone="Berlin"
+;time_zone = "UTC"
 
 ; Short and long date formats
-date_format_short = "%Y-%m-%d"
-date_format_long = "%B %e, %Y"
-datetime_format_short = "%Y-%m-%d %I:%M %p"
-datetime_format_long = "%B %e, %Y - %I:%M %p"
-time_format = "%I:%M %p"
+;date_format_short = "%Y-%m-%d"
+;date_format_long = "%B %e, %Y"
+;datetime_format_short = "%Y-%m-%d %I:%M %p"
+;datetime_format_long = "%B %e, %Y - %I:%M %p"
+;time_format = "%I:%M %p"
+
+; ulb
+date_format_short = "%d.%m.%Y"
+date_format_long = "%A, %d. %B %Y"
+datetime_format_short = "%d.%m.%Y %I:%M"
+datetime_format_long = "%e %B %Y - %I:%M"
+time_format = "%I:%M"
+
+
 
 ; Use URL parameters instead of CGI PATH_INFO. This is useful for broken server
 ; setups that don't support the PATH_INFO environment variable.
@@ -145,6 +154,8 @@ name = ojs
 ; collation = utf8_general_ci
 
 ; Enable database debug output (very verbose!)
+; ulb 
+;debug = On
 debug = Off
 
 ;;;;;;;;;;;;;;;;;;
@@ -189,7 +200,7 @@ web_cache_hours = 1
 [i18n]
 
 ; Default locale
-locale = de_DE
+locale = de_DE.UTF-8
 
 ; Client output/input character set
 client_charset = utf-8
@@ -245,9 +256,11 @@ filename_revision_match = 70
 [security]
 
 ; Force SSL connections site-wide
+; ulb 
 force_ssl = Off
 
 ; Force SSL connections for login only
+; ulb
 force_login_ssl = Off
 
 ; This check will invalidate a session if the user's IP address changes.
@@ -262,7 +275,7 @@ session_check_ip = On
 encryption = sha1
 
 ; The unique salt to use for generating password reset hashes
-salt = "YouMustSetASecretKeyHere!!"
+salt = "SaltMe*ULB"
 
 ; The unique secret used for encoding and decoding API keys
 api_key_secret = ""
@@ -306,17 +319,17 @@ allowed_html = "a[href|target|title],em,strong,cite,code,ul,ol,li[class],dl,dt,d
 [email]
 
 ; Use SMTP for sending mail instead of mail()
-; smtp = On
+smtp = On
 
 ; SMTP server settings
-; smtp_server = mail.example.com
-; smtp_port = 25
+smtp_server = mail.uni-halle.de
+smtp_port = 587
 
 ; Enable SMTP authentication
 ; Supported smtp_auth: ssl, tls (see PHPMailer SMTPSecure)
-; smtp_auth = ssl
-; smtp_username = username
-; smtp_password = password
+smtp_auth = tsl
+smtp_username = mail_username
+smtp_password = mail_password
 ;
 ; Supported smtp_authtype: RAM-MD5, LOGIN, PLAIN, XOAUTH2 (see PHPMailer AuthType)
 ; (Leave blank to try them in that order)
@@ -422,7 +435,7 @@ results_per_keyword = 500
 oai = On
 
 ; OAI Repository identifier
-repository_id = "ojs2.127.0.0.1:8080"
+repository_id = "public.bibliothek.uni-halle.de"
 
 ; Maximum number of records per request to serve via OAI
 oai_max_records = 100
