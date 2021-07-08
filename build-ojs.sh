@@ -24,7 +24,7 @@ else
     git clone ${OJS_GIT} || echo "'${OJS_GIT}' just here"
 fi
 
-sed -i 's/mail_password/$SMTP_PASS/' ojs.config.inc.php
+sed -i "s/mail_password/$SMTP_PASS/" ojs.config.inc.php
 
 cp -v ojs.config.inc.php ${PROJECT_DATA_ROOT}/config/
 
