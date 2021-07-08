@@ -48,7 +48,7 @@ docker-compose --file ./docker-compose-ulb.yml down
 docker-compose --file ./docker-compose-ulb.yml up -d
 
 # copy uni favicon
-docker cp favicon.ico ojs_app_ulb:/var/www/html/favicon.ico
+docker cp ./resources/favicon.ico ojs_app_ulb:/var/www/html/favicon.ico
 
 echo dump OJS database ${PROJECT_DATA_ROOT}/sqldumps/$(date +"%Y-%m-%d")_${OJS_VERSION}_ojs.sql
 
