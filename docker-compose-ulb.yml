@@ -24,7 +24,7 @@ services:
     volumes:
       - /data/ojs/db:/var/lib/mysql
       - /data/ojs/logs/db:/var/log/mysql
-      - ./mariadb.cnf:/etc/mysql/conf.d/mariadb.cnf
+      - ./resources/mariadb.cnf:/etc/mysql/conf.d/mariadb.cnf
 #      - ./config/db.charset.conf:/etc/mysql/conf.d/charset.cnf
 #      - ./migration:/docker-entrypoint-initdb.d
     networks:
