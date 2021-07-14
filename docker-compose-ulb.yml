@@ -46,8 +46,8 @@ services:
       - /data/ojs/private:/var/www/files
       - /data/ojs/public:/var/www/html/public
       - /data/ojs/logs/app:/var/log/apache2
-      - /data/ojs/config/ssl/omp.pem:/etc/ssl/apache2/server.pem
-      - /data/ojs/config/ssl/omp.key:/etc/ssl/apache2/server.key      
+      - /data/ojs/config/ssl/ojs.pem:/etc/ssl/apache2/server.pem
+      - /data/ojs/config/ssl/ojs.key:/etc/ssl/apache2/server.key      
 #      # WARNING: You can only enable file-volumes if file exists in the container.
       - /data/ojs/config/ojs.config.inc.php:/var/www/html/config.inc.php
 #      - ./config/apache.htaccess:/var/www/html/.htaccess
