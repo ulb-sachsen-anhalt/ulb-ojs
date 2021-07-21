@@ -3,22 +3,22 @@
 OJS install pipeline
 
 
-git, gitlab-runner, docker, docker-compose auf Server installieren 
+git, gitlab-runner, docker, docker-cojsose auf Server installieren 
 Runner configurieren
 
 ojs.config.inc.php (host, port pwd, etc) Anpassen!
 
-docker-compose-ulb.yml  (host, port pwd, etc) Anpassen!
+docker-cojsose-ulb.yml  (host, port pwd, etc) Anpassen!
 
 TODO: 
 
-- Daten in /home/ojs/volumes/db ablegen
-- Datenbank update
+- Daten in /home/ojs/ ablegen &#10003;
+- Datenbank update &#10003;
 
 
 
 
-upgrade OJS von 3.1.1.2(aktuell) auf 3_3_0_6
+upgrade OJS von 3.1.1.2(aktuell) auf 3_3_0_6 &#10003;
 
 https://openjournaltheme.com/how-to-upgrade-ojs-3/
 
@@ -44,4 +44,44 @@ cp -aur /srv/ojs/public/site/ /data/ojs/public/
 cp -aur /home/ojs/journals/ /data/ojs/private/
 </pre>
 
-./upgrade_ojs.sh
+./upgrade_ojs.sh &#10003;
+
+Diese Rechte entsprechen den uid/gid im entspr. container.
+Da diese Ordner von den Containern eingebunden werden, sollten diese Rechte gesetzt werden.
+
+Im container Diese Rechte entsprechen den uid/gid im entspr. container.
+Da diese Ordner von den Containern eingebunden werden, sollten diese Rechte gesetzt werden.
+
+Im container ojs_app_ulb
+<pre>
+ >id apache   
+ >uid=100(apache) gid=101(apache) groups=101(apache),82(www-data),101(apache)
+</pre>
+Im container ojs_db_ulb
+<pre>
+ >id mysql  
+ >uid=999(mysql) gid=999(mysql) groups=999(mysql)
+</pre>
+
+
+<pre>
+sudo chown 100:100  /data/ojs/ -R
+sudo chown 999:999  /data/ojs/logs/db -R 
+sudo chown 999:999  /data/db -R 
+</pre>_app_ulb
+<pre>
+ >id apache   
+ >uid=100(apache) gid=101(apache) groups=101(apache),82(www-data),101(apache)
+</pre>
+Im container ojs_db_ulb
+<pre>
+ >id mysql  
+ >uid=999(mysql) gid=999(mysql) groups=999(mysql)
+</pre>
+
+
+<pre>
+sudo chown 100:100  /data/ojs/ -R
+sudo chown 999:999  /data/ojs/logs/db -R 
+sudo chown 999:999  /data/db -R 
+</pre>
