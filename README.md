@@ -46,9 +46,12 @@ cp -aur /home/ojs/journals/ /data/ojs/private/
 
 ./upgrade_ojs.sh &#10003;
 
+OJS Daten in 
 
-Im container Diese Rechte entsprechen den uid/gid im entspr. container.
-Da diese Ordner von den Containern eingebunden werden, sollten diese Rechte gesetzt werden.
+/data/ojs
+
+Die Besitzer hier entsprechen den uid/gid im entspr. Container.
+Da diese Ordner/Unterordner von den Containern eingebunden werden, sollten diese Rechte analog gesetzt werden:
 
 
 Im Container ojs_app_ulb:
@@ -59,8 +62,7 @@ Im Container ojs_app_ulb:
 
 Host:
 <pre>
-sudo chown 999:999  /data/ojs/logs/db -R 
-sudo chown 999:999  /data/db -R 
+sudo chown 100:100  /data/ojs/ -R
 </pre>
 
 
