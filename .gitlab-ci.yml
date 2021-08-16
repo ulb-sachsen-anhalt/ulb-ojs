@@ -8,4 +8,4 @@ builddev-job:
 
   script:
     - echo "Install OJS"
-    - ./build-ojs.sh $DB_PASS $SMTP_PASS dev
+    - ./build.sh $DB_PASS $SMTP_PASS dev
