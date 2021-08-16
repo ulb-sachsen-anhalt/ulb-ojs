@@ -1,0 +1,61 @@
+# File: docker-compose.yml
+# Access via "http://localhost:8080"
+#
+# Call example:
+# $ docker-compose -f docker-compose-ulb.yml up
+
+version: "3.6"
+
+networks:
+  inside:
+    external: false
+
+services:
+  db:
+    image: mariadb:10.2
+    env_file:
+      - .env
+    container_name: "ojsprod_db_ulb"
+    environment:
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+      MYSQL_DATABASE: "${MYSQL_DATABASE}"
+      MYSQL_USER: "${MYSQL_USER}"
+      MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
+    volumes:
+      - /data/ojsprod/db:/var/lib/mysql
+      - /data/ojsprod/logs/db:/var/log/mysql
+      - ./resources/mariadb.cnf:/etc/mysql/conf.d/mariadb.cnf
+#      - ./config/db.charset.conf:/etc/mysql/conf.d/charset.cnf
+#      - ./migration:/docker-entrypoint-initdb.d
+    networks:
+      - inside
+    restart: always
+
+  ojsprod:
+    image: pkpofficial/ojs:${OJS_VERSION_ULB_PROD}
+    env_file:
+      - .env
+    container_name: "ojsprod_app_ulb"
+    hostname: "${COMPOSE_PROJECT_NAME}"
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /etc/localtime:/etc/localtime
+      - /data/ojsprod/private:/var/www/files
+      - /data/ojsprod/public:/var/www/html/public
+      - /data/ojsprod/logs/app:/var/log/apache2
+      - /data/ojsprod/config/ojs.config.inc.php:/var/www/html/config.inc.php:ro
+      - /data/ojsprod/config/ojsprod.conf:/etc/apache2/conf.d/ojs.conf
+      - /data/ojsprod/config/ssl/ojs.pem:/etc/ssl/apache2/server.pem:ro
+      - /data/ojsprod/config/ssl/ojs.key:/etc/ssl/apache2/server.key:ro
+
+#      # WARNING: You can only enable file-volumes if file exists in the container.
+#      - ./config/apache.htaccess:/var/www/html/.htaccess
+#      - ./php.custom.ini:/usr/local/etc/php/conf.d/custom.ini
+
+    networks:
+      - inside
+    depends_on:
+      - db
