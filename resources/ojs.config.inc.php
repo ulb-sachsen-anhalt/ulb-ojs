@@ -330,7 +330,7 @@ smtp_port = 587
 smtp_auth = tsl
 smtp_username = aqvgr
 ; ojs wird mit sed ersetzt
-smtp_password = ojs
+smtp_password = email_password
 ;
 ; Supported smtp_authtype: RAM-MD5, LOGIN, PLAIN, XOAUTH2 (see PHPMailer AuthType)
 ; (Leave blank to try them in that order)
