@@ -32,7 +32,9 @@ services:
     restart: always
 
   ojsprod:
-    image: pkpofficial/ojs:${OJS_VERSION_ULB_PROD}
+    # image: pkpofficial/ojs:${OJS_VERSION_ULB_PROD}
+    build: .
+    image: ojs:${OJS_VERSION_ULB_PROD}
     env_file:
       - .env
     container_name: "ojsprod_app_ulb"
@@ -46,10 +48,10 @@ services:
       - /data/ojsprod/private:/var/www/files
       - /data/ojsprod/public:/var/www/html/public
       - /data/ojsprod/logs/app:/var/log/apache2
-      - /data/ojsprod/config/ojs.config.inc.php:/var/www/html/config.inc.php:ro
+#      - /data/ojsprod/config/ojs.config.inc.php:/var/www/html/config.inc.php:ro
       - /data/ojsprod/config/ojsprod.conf:/etc/apache2/conf.d/ojs.conf
-      - /data/ojsprod/config/ssl/ojs.pem:/etc/ssl/apache2/server.pem:ro
-      - /data/ojsprod/config/ssl/ojs.key:/etc/ssl/apache2/server.key:ro
+#      - /data/ojsprod/config/ssl/ojs.pem:/etc/ssl/apache2/server.pem:ro
+#      - /data/ojsprod/config/ssl/ojs.key:/etc/ssl/apache2/server.key:ro
 
 #      # WARNING: You can only enable file-volumes if file exists in the container.
 #      - ./config/apache.htaccess:/var/www/html/.htaccess
