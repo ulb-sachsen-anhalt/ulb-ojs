@@ -46,8 +46,8 @@ fi
 
 # place ojs.config.inc.php file
 echo propagate new version of \"ojs.config.inc.php\"
-sed -i "s/mail_password/$SMTP_PASS/" ./resources/ojs.config.inc.php
 cp -v ./resources/ojs.config.inc.php $data_dir/config/
+sed -i "s/mail_password/$SMTP_PASS/" $data_dir/config/ojs.config.inc.php
 
 # place Apache configuration file for VirtualHost 
 cp -v ./resources/ojs$3.conf $data_dir/config/
@@ -83,9 +83,9 @@ fi
 
 echo try start docker-compose with docker-compose-ojs$3.yml
 #start OJS
-./stop-ojs $3
-./start-ojs $3
-
+#./stop-ojs $3
+#./start-ojs $3
+exit
 # copy uni favicon
 docker cp ./resources/favicon.ico ojs$3_app_ulb:/var/www/html/favicon.ico
 
