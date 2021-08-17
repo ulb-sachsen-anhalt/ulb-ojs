@@ -41,8 +41,8 @@ services:
     hostname: "${COMPOSE_PROJECT_NAME}"
     restart: always
     ports:
-      - "8080:80"
-      - "8443:443"
+      - "80:80"
+      - "443:443"
     volumes:
       - /etc/localtime:/etc/localtime
       - /data/ojsprod/private:/var/www/files
