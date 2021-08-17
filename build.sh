@@ -59,6 +59,8 @@ if [ -z "$OJS_HOME$" ] ; then echo "**OJS Version $VERSION not found!**";
 
 echo copy $OJS_HOME/Dockerfile .
 cp -v $OJS_HOME/Dockerfile .
+echo add mod_proxy to Dockerfile 
+sed -i "s/ENV PACKAGES/ENV PACKAGES apache2-proxy/g" Dockerfile
 
 echo copy $OJS_HOME/exclude.list .
 cp -v $OJS_HOME/exclude.list .
@@ -85,10 +87,11 @@ echo try start docker-compose with docker-compose-ojs$3.yml
 #start OJS
 #./stop-ojs $3
 #./start-ojs $3
-exit
+# exit
 # copy uni favicon
 docker cp ./resources/favicon.ico ojs$3_app_ulb:/var/www/html/favicon.ico
 
+exit
 
 if [ $3 == "prod" ]; then
     echo dump OJS database $data_dir/sqldumps/$(date +"%Y-%m-%d")_${OJS_VERSION}_ojs.sql
