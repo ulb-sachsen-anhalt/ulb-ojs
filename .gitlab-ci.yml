@@ -1,5 +1,6 @@
 stages:
     - build_dev
+    - build    
 
 builddev-job:
   stage: build_dev
@@ -7,5 +8,18 @@ builddev-job:
     - ulb-ojs-dev
 
   script:
-    - echo "Install OJS"
+    - echo "Install OJS DEVELOP"
     - ./build.sh $DB_PASS $SMTP_PASS dev
+
+build-job:
+  stage: build
+
+  needs:
+    - builddev-job
+
+  tags:
+    - ulb-ojs
+
+  script:
+    - echo "Install OJS PRODUCTION"
+    - ./build.sh $DB_PASS $SMTP_PASS prod
