@@ -91,7 +91,7 @@ echo try start docker-compose with docker-compose-ojs$3.yml
 # copy uni favicon
 docker cp ./resources/favicon.ico ojs$3_app_ulb:/var/www/html/favicon.ico
 
-exit
+
 
 if [ $3 == "prod" ]; then
     echo dump OJS database $data_dir/sqldumps/$(date +"%Y-%m-%d")_${OJS_VERSION}_ojs.sql
