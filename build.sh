@@ -96,7 +96,7 @@ docker cp ./resources/favicon.ico ojs$3_app_ulb:/var/www/html/favicon.ico
 if [ $3 == "prod" ]; then
     echo dump OJS database $data_dir/sqldumps/$(date +"%Y-%m-%d")_${OJS_VERSION}_ojs.sql
     backup=${PROJECT_DATA_ROOT}/sqldumps/$(date +"%Y-%m-%d")_${OJS_VERSION}_ojs
-    docker exec oj$3_db_ulb mysqldump -p${DB_PASS} ojs > $backup && \
+    docker exec ojs$3_db_ulb mysqldump -p${DB_PASS} ojs > $backup && \
         echo "backup successfull:" $(du -h $backup) && mv "$backup" "$backup".sql || \
         if [ -f "$backup" ]; then 
             rm "$backup"
