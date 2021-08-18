@@ -85,7 +85,7 @@ fi
 
 echo try start docker-compose with docker-compose-ojs$3.yml
 
-docker network create ojs
+docker network create ojs || true
 
 ./stop-ojs $3
 ./start-ojs $3
