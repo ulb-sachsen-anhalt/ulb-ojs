@@ -32,7 +32,7 @@
 installed = On
 
 ; The canonical URL to the OJS installation (excluding the trailing slash)
-base_url = "http://127.0.0.1:8080"
+base_url = "https://public.bibliothek.uni-halle.de"
 
 ; Enable strict mode. This will more aggressively cause errors/warnings when
 ; deprecated behaviour exists in the codebase.
