@@ -85,8 +85,12 @@ fi
 
 echo try start docker-compose with docker-compose-ojs$3.yml
 
+docker network create ojs
+
 ./stop-ojs $3
 ./start-ojs $3
+
+docker network connect ojs ojs$3_db_ulb
 
 # copy uni favicon
 docker cp ./resources/favicon.ico ojs$3_app_ulb:/var/www/html/favicon.ico
