@@ -90,7 +90,7 @@ docker network create ojs || true
 ./stop-ojs $3
 ./start-ojs $3
 
-docker network connect ojs ojs$3_db_ulb
+docker network connect ojs ojs$3_app_ulb
 
 # copy uni favicon
 docker cp ./resources/favicon.ico ojs$3_app_ulb:/var/www/html/favicon.ico
