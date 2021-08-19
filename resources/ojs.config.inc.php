@@ -327,7 +327,7 @@ smtp_port = 587
 
 ; Enable SMTP authentication
 ; Supported smtp_auth: ssl, tls (see PHPMailer SMTPSecure)
-smtp_auth = tsl
+smtp_auth = tls
 smtp_username = aqvgr
 ; ojs wird mit sed ersetzt
 smtp_password = mail_password

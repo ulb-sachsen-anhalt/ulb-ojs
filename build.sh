@@ -74,14 +74,18 @@ cp -R $OJS_HOME/root .
 # replace Host variable if in development build
 if [ $3 == "dev" ]; then
     # cp -v ./resources/ompdev.conf $data_dir/config/
-    echo "reconfigure config file file with sed: ojs.config.inc.php"
+    echo "reconfigure config file with sed: ojs.config.inc.php"
     sed -i "s/ojsprod_db_ulb/ojsdev_db_ulb/" $data_dir/config/ojs.config.inc.php
     echo "copy and reconfigure develop compose file with sed: docker-compose-ojsdev-ulb.yml"
     cp -v ./docker-compose-ojsprod.yml ./docker-compose-ojsdev.yml
     echo "sed data in docker-compose-ojsdev.yml for develop server"
     sed -i "s/ojsprod/ojsdev/g" ./docker-compose-ojsdev.yml
-    sed -i "s/80:80/8080:80/" ./docker-compose-ojsdev.yml
-    sed -i "s/443:443/8443:443/" ./docker-compose-ojsdev.yml
+    # do not expose any port
+    sed -i "/ports:/d" ./docker-compose-ompdev.yml
+    sed -i "/80:80/d" ./docker-compose-ompdev.yml
+    sed -i "/443:443/d" ./docker-compose-ompdev.yml
+    # sed -i "s/80:80/8080:80/" ./docker-compose-ojsdev.yml
+    # sed -i "s/443:443/8443:443/" ./docker-compose-ojsdev.yml
     sed -i "s/OJS_VERSION_ULB_PROD/OJS_VERSION_ULB_DEV/" ./docker-compose-ojsdev.yml
 fi
 
