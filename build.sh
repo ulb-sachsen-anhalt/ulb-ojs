@@ -4,8 +4,10 @@ set -eu
 
 if [ $# -eq 0 ]
   then
-    echo "Please pass root password for mysqldump, otherwise no dump file will be created"
-    set -- "no-pwd"
+    echo "Please pass: 
+            - root password for mysqldump, (e.g. *ojs*)
+            - password SMTP (e.g. *arbitrary*)
+            - docker-compose project-name  (*dev* or *prod*) "
 fi
 
 
@@ -72,8 +74,9 @@ cp -R $OJS_HOME/root .
 # replace Host variable if in development build
 if [ $3 == "dev" ]; then
     # cp -v ./resources/ompdev.conf $data_dir/config/
-    echo "reconfigure compose file: docker-compose-ojsdev-ulb.yml"
+    echo "reconfigure config file file with sed: ojs.config.inc.php"
     sed -i "s/ojsprod_db_ulb/ojsdev_db_ulb/" $data_dir/config/ojs.config.inc.php
+    echo "copy and reconfigure develop compose file with sed: docker-compose-ojsdev-ulb.yml"
     cp -v ./docker-compose-ojsprod.yml ./docker-compose-ojsdev.yml
     echo "sed data in docker-compose-ojsdev.yml for develop server"
     sed -i "s/ojsprod/ojsdev/g" ./docker-compose-ojsdev.yml
@@ -82,15 +85,17 @@ if [ $3 == "dev" ]; then
     sed -i "s/OJS_VERSION_ULB_PROD/OJS_VERSION_ULB_DEV/" ./docker-compose-ojsdev.yml
 fi
 
-
 echo try start docker-compose with docker-compose-ojs$3.yml
 
-docker network create ojs || true
+compose_network=ojs
+
+docker network inspect $compose_network >/dev/null 2>&1 || \
+    docker network create $compose_network
 
 ./stop-ojs $3
 ./start-ojs $3
 
-docker network connect ojs ojs$3_app_ulb
+docker network connect $compose_network ojs$3_app_ulb
 
 # copy uni favicon
 docker cp ./resources/favicon.ico ojs$3_app_ulb:/var/www/html/favicon.ico
