@@ -9,7 +9,8 @@ version: "3.6"
 networks:
   inside:
     external: false
-
+  ojs:  
+    external: true 
 services:
   db:
     image: mariadb:10.2
@@ -59,5 +60,6 @@ services:
 
     networks:
       - inside
+      - ojs
     depends_on:
       - db
