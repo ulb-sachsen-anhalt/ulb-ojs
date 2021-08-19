@@ -49,7 +49,10 @@ fi
 # place ojs.config.inc.php file
 echo propagate new version of \"ojs.config.inc.php\"
 cp -v ./resources/ojs.config.inc.php $data_dir/config/
-sed -i "s/mail_password/$SMTP_PASS/" $data_dir/config/ojs.config.inc.php
+
+if [ $3 == "prod" ]; then
+    sed -i "s/mail_password/$SMTP_PASS/" $data_dir/config/ojs.config.inc.php
+fi
 
 # place Apache configuration file for VirtualHost 
 cp -v ./resources/ojs$3.conf $data_dir/config/
