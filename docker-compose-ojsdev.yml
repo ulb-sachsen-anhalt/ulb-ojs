@@ -41,9 +41,6 @@ services:
     container_name: "ojsdev_app_ulb"
     hostname: "${COMPOSE_PROJECT_NAME}"
     restart: always
-    ports:
-      - "8080:80"
-      - "8443:443"
     volumes:
       - /etc/localtime:/etc/localtime
       - /data/ojsdev/private:/var/www/files
