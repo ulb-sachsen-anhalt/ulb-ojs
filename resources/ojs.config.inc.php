@@ -278,7 +278,7 @@ encryption = sha1
 salt = "SaltMe*ULB"
 
 ; The unique secret used for encoding and decoding API keys
-api_key_secret = ""
+api_key_secret = "SaltMe*ULB"
 
 ; The number of seconds before a password reset hash expires (defaults to 7200 / 2 hours)
 reset_seconds = 7200
