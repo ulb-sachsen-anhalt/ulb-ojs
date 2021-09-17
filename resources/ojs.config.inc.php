@@ -231,7 +231,7 @@ public_files_dir = public
 ; tinymce editor to their bio. Editors can upload images for
 ; some of the settings.
 ; Set this to 0 to disallow such uploads.
-public_user_dir_size = 5000
+public_user_dir_size = 500000
 
 ; Permissions mask for created files and directories
 umask = 0022
