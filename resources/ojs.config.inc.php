@@ -257,7 +257,7 @@ filename_revision_match = 70
 
 ; Force SSL connections site-wide
 ; ulb 
-force_ssl = Off
+force_ssl = On
 
 ; Force SSL connections for login only
 ; ulb
