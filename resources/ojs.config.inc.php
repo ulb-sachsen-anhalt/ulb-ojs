@@ -117,7 +117,7 @@ trust_x_forwarded_for = Off
 citation_checking_max_processes = 3
 
 ; Display a message on the site admin and journal manager user home pages if there is an upgrade available
-show_upgrade_warning = On
+show_upgrade_warning = Off
 
 ; Set the following parameter to off if you want to work with the uncompiled (non-minified) JavaScript
 ; source for debugging or if you are working off a development branch without compiled JavaScript.
@@ -330,6 +330,7 @@ smtp_port = 587
 smtp_auth = tls
 smtp_username = aqvgr
 ; ojs wird mit sed ersetzt
+; pwd will be replaced by sed
 smtp_password = mail_password
 ;
 ; Supported smtp_authtype: RAM-MD5, LOGIN, PLAIN, XOAUTH2 (see PHPMailer AuthType)
