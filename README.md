@@ -1,4 +1,7 @@
-# ulb-ojs
+# OJS Server ULB
+
+[![pipeline status](https://git.itz.uni-halle.de/ulb/ulb-ojs/badges/master/pipeline.svg)](https://git.itz.uni-halle.de/ulb/ulb-ojs/badges/master/pipeline.svg)
+
 
 OJS install pipeline
 
@@ -6,21 +9,16 @@ OJS install pipeline
 git, gitlab-runner, docker, docker-cojsose auf Server installieren 
 Runner configurieren
 
-ojs.config.inc.php (host, port pwd, etc) Anpassen!
+ojs.config.inc.php (host, port pwd, mail, etc) Anpassen!
 
-docker-cojsose-ulb.yml  (host, port pwd, etc) Anpassen!
+docker-cojsose-ulb.yml  (host, port, pwd, etc) Anpassen!
 
 TODO: 
 
 - Daten in /home/ojs/ ablegen &#10003;
 - Datenbank update &#10003;
+- upgrade OJS von 3.1.1.2(aktuell) auf 3_3_0_6 &#10003;
 
-
-
-
-upgrade OJS von 3.1.1.2(aktuell) auf 3_3_0_6 &#10003;
-
-https://openjournaltheme.com/how-to-upgrade-ojs-3/
 
 https://github.com/pkp/ojs/blob/main/docs/UPGRADE.md
 
@@ -36,8 +34,9 @@ cp -aur /home/ojs/journals/ /data/ojs/public/
 </pre>
 
 die Journalbilder/Sitebilder liegen unter /srv/ojs/public/
-"private" liegt unter /home/ojs/jurnals
-also auch hier 
+
+"private" liegt unter /home/ojs/journals
+
 <pre>
 cp -aur /srv/ojs/public/journals/ /data/ojs/public/
 cp -aur /srv/ojs/public/site/ /data/ojs/public/
@@ -46,15 +45,14 @@ cp -aur /home/ojs/journals/ /data/ojs/private/
 
 ./upgrade_ojs.sh &#10003;
 
-OJS Daten in 
+OJS Daten liegen nun in 
 
-/data/ojs
+_/data/ojsprod_ bzw. _/data/ojsdev_
 
 Die Besitzer hier entsprechen den uid/gid im entspr. Container.
 Da diese Ordner/Unterordner von den Containern eingebunden werden, sollten diese Rechte analog gesetzt werden:
 
-
-Im Container ojs_app_ulb:
+Im Container ojsdev_app_ulb / ojsprod_app_ulb:
 <pre>
  >id apache   
  >uid=100(apache) gid=101(apache) groups=101(apache),82(www-data),101(apache)
@@ -62,11 +60,12 @@ Im Container ojs_app_ulb:
 
 Host:
 <pre>
-sudo chown 100:100  /data/ojs/ -R
+sudo chown 100:100  /data/ojsprod/ -R
+sudo chown 100:100  /data/ojsdev/ -R
 </pre>
 
 
-Im container ojs_db_ulb:
+Im container ojsprod_db_ulb bzw. ojsdev_db_ulb:
 <pre>
  >id mysql  
  >uid=999(mysql) gid=999(mysql) groups=999(mysql)
@@ -74,6 +73,6 @@ Im container ojs_db_ulb:
 
 Host:
 <pre>
-sudo chown 999:999  /data/ojs/logs/db -R 
-sudo chown 999:999  /data/db -R 
+sudo chown 999:999  /data/ojs{&lt;prod&gt;,&lt;dev&gt;}/logs/db -R 
+sudo chown 999:999  /data/ojs{&lt;prod&gt;,&lt;dev&gt;}db -R 
 </pre>
