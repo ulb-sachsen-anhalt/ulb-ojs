@@ -7,11 +7,14 @@ if  [ -z "$1" ] || ([ $1 != "dev" ] && [ $1 != "prod" ] && [ $1 != "local" ])
 
 elif [ "$1" == "dev" ] ||  [ "$1" == "local" ]
     then
+        echo stop docker compose
+        echo docker-compose -f docker-compose-ojs"$1".yml -p $1 down
         docker-compose -f docker-compose-ojs"$1".yml -p $1 down
 
 elif [ "$1" == "prod" ]
     then
         echo stop docker compose
+        echo docker-compose -f docker-compose-ojsprod.yml -p $1 down
         docker-compose -f docker-compose-ojsprod.yml -p $1 down
 fi
 
