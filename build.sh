@@ -8,6 +8,7 @@ if [ $# -eq 0 ]
             - root password for mysqldump, (e.g. *ojs*)
             - password SMTP (e.g. *arbitrary*)
             - docker-compose project-name  (*dev* or *prod*) "
+    exit
 fi
 
 
@@ -48,7 +49,12 @@ fi
 
 # place ojs.config.inc.php file
 echo propagate new version of \"ojs.config.inc.php\"
+
 cp -v ./resources/ojs.config.inc.php $data_dir/config/
+
+# copy custom ULB-theme to /data/config
+cp -r ./resources/ulb_theme $data_dir/config/
+
 
 if [ "$TARGET" == "prod" ]; then
     sed -i "s/mail_password/$SMTP_PASS/" $data_dir/config/ojs.config.inc.php
