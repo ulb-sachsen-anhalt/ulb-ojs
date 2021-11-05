@@ -1,5 +1,4 @@
-// * Copyright (c) 2021 ULB Sachsen-Anhalt
-
+// Copyright (c) 2021 Universitäts- und Landesbibliothek Sachsen-Anhalt
 // ******Achtung********
 // Die Links 'Suche' und 'Home' erscheinen nur, wenn ein (leeres) Menue im Hauptbereich angelegt wird!
 
@@ -35,3 +34,24 @@ $('.obj_article_summary a').each(function() {
     $(this).attr('href', this.href + location.search);
 });
 
+var queryword = (new URL(location.href)).searchParams.get('query')
+
+function replaceText(searchword) {
+
+    $("body").find(".highlight").removeClass("highlight");
+
+    
+
+    var custfilter = new RegExp(searchword, "ig");
+    var repstr = "<span class='highlight'>" + searchword + "</span>";
+
+    if (searchword != "") {
+        $('body').each(function() {
+            $('.item abstract').html($('.item abstract').html().replace(custfilter, repstr));
+        })
+    }
+}
+
+if (queryword != null) {
+    replaceText(queryword)
+}

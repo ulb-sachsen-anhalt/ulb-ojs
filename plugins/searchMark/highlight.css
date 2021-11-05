@@ -1,0 +1,14 @@
+/**
+ * plugins/generic/sehl/sehl.css
+ *
+ * Copyright (c) 2021 ULB Uni-Halle
+ * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+ *
+ *
+ */
+
+
+span.sehl {
+	background-color: grey;
+	color: #ffffff;
+}

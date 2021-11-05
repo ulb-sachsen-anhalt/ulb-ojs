@@ -46,10 +46,13 @@ services:
       - /data/ojsdev/public:/var/www/html/public
       - /data/ojsdev/logs/app:/var/log/apache2
       - /data/ojsdev/config/ojs.config.inc.php:/var/www/html/config.inc.php:ro
+      - /data/ojsdev/config/php.ulb.ini:/etc/php7/conf.d/php.ulb.ini:ro
       - /data/ojsdev/config/ojsdev.conf:/etc/apache2/conf.d/ojs.conf:ro
       - /data/ojsdev/config/ssl/ojs.pem:/etc/ssl/apache2/server.pem:ro
       - /data/ojsdev/config/ssl/ojs.key:/etc/ssl/apache2/server.key:ro
-      - /data/ojsdev/config/ulb_theme:/var/www/html/plugins/themes/ulb_theme:ro
+      # ULB custom made plugins
+      - /data/ojsdev/plugins/ulb_theme:/var/www/html/plugins/themes/ulb_theme
+      - /data/ojsdev/plugins/searchMark:/var/www/html/plugins/generic/searchMark
 
 #      # WARNING: You can only enable file-volumes if file exists in the container.
 #      - ./config/apache.htaccess:/var/www/html/.htaccess

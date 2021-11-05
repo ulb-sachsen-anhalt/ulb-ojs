@@ -6,12 +6,12 @@
 OJS install pipeline
 
 
-git, gitlab-runner, docker, docker-cojsose auf Server installieren 
+git, gitlab-runner, docker, docker-ojs auf Server installieren 
 Runner configurieren
 
 ojs.config.inc.php (host, port pwd, mail, etc) Anpassen!
 
-docker-cojsose-ulb.yml  (host, port, pwd, etc) Anpassen!
+docker-ojs-ulb.yml  (host, port, pwd, etc) Anpassen!
 
 TODO: 
 
@@ -60,8 +60,8 @@ Im Container ojsdev_app_ulb / ojsprod_app_ulb:
 
 Host:
 <pre>
-sudo chown 100:100  /data/ojsprod/ -R
-sudo chown 100:100  /data/ojsdev/ -R
+sudo chown 100:101  /data/ojsprod/ -R
+sudo chown 100:101  /data/ojsdev/ -R
 </pre>
 
 
@@ -76,3 +76,8 @@ Host:
 sudo chown 999:999  /data/ojs{&lt;prod&gt;,&lt;dev&gt;}/logs/db -R 
 sudo chown 999:999  /data/ojs{&lt;prod&gt;,&lt;dev&gt;}db -R 
 </pre>
+
+
+
+
+https://typeset.io/resources/the-a-z-of-open-journal-systems-ojs-3-user-guide/
