@@ -9,7 +9,7 @@ builddev-job:
 
   script:
     - echo "Install OJS DEVELOP"
-    - ./build.sh $DB_PASS $SMTP_PASS dev
+    - ./build.sh $SMTP_PASS dev
 
 build-job:
   stage: build
@@ -22,4 +22,4 @@ build-job:
 
   script:
     - echo "Install OJS PRODUCTION"
-    - ./build.sh $DB_PASS $SMTP_PASS prod
+    - ./build.sh $SMTP_PASS prod
