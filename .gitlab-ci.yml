@@ -11,6 +11,7 @@ builddev-job:
     - echo "Install OJS DEVELOP"
     - ./build.sh $SMTP_PASS dev
     - ./stop-ojs dev
+    - ./start-ojs dev
     - if [ $(curl -LI https://publicdev.bibliothek.uni-halle.de/ -o /dev/null -w '%{http_code}\n' -s) != "200" ]; then exit 1; fi
 
 build-job:
