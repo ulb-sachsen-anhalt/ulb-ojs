@@ -10,7 +10,8 @@ builddev-job:
   script:
     - echo "Install OJS DEVELOP"
     - ./build.sh $SMTP_PASS dev
-
+    - ./stop-ojs dev
+    - ./start-ojs dev
 build-job:
   stage: build
 
