@@ -12,8 +12,8 @@ builddev-job:
     - ./build.sh $SMTP_PASS dev
     - ./stop-ojs dev
     - ./start-ojs dev
-    - |
-      if [ $(curl -LI https://public.bibliothek.uni-halle.de/ -o /dev/null -w '%{http_code}\n' -s) != "200" ]; then
+    - >
+      if [ $(curl -LIk https://public.bibliothek.uni-halle.de/ -o /dev/null -w '%{http_code}\n' -s) != "200" ]; then
         exit 1;
       else
         echo development Server started successfully;
