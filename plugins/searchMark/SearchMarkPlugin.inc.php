@@ -9,9 +9,6 @@
  * @class SearchMarkPlugin
  */
 
-
-
-
 import('lib.pkp.classes.plugins.GenericPlugin');
 
 class SearchMarkPlugin extends GenericPlugin {
@@ -25,7 +22,6 @@ class SearchMarkPlugin extends GenericPlugin {
     }
 
 	public function displayTemplateCallback($hookName, $args) {
-		error_log('display');
 		$templateMgr =& $args[0];
 		$template =& $args[1];
 		$request = Application::get()->getRequest();
@@ -89,7 +85,7 @@ class SearchMarkPlugin extends GenericPlugin {
 	}
 
 	public function isSitePlugin() {
-		return true;
+		return !Application::get()->getRequest()->getContext();  
 	}
 
 }
