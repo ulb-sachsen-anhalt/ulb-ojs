@@ -14,10 +14,10 @@ builddev-job:
     - ./start-ojs dev
     - |
       if [ $(curl -LI https://publicdev.bibliothek.uni-halle.de/ -o /dev/null -w '%{http_code}\n' -s) != "200" ]; then
-        exit 1
-      else;
-        echo development Server started successfully
-      fi;
+        exit 1;
+      else
+        echo development Server started successfully;
+      fi
 
 build-job:
   stage: build
