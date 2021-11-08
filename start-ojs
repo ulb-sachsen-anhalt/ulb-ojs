@@ -1,5 +1,9 @@
 #!/bin/bash
 
+compose_network=ojs
+docker network inspect $compose_network >/dev/null 2>&1 || \
+    docker network create $compose_network
+
 if  [ -z "$1" ] || ([ $1 != "dev" ] && [ $1 != "prod" ] && [ $1 != "local" ])
     then
         echo "Parameter 'dev' oder 'prod' oder 'local' fehlt"
@@ -9,9 +13,11 @@ elif [ "$1" == "dev" ] ||  [ "$1" == "local" ]
     then
         echo "start docker-compose with docker-compose-ojs$1.yml"
         docker-compose -f docker-compose-ojs"$1".yml -p "$1" up -d
+        docker network connect $compose_network ojsdev_app_ulb
 
 elif [ $1 == "prod" ]
     then
         echo "start docker-compose with docker-compose-ojs$1.yml"
         docker-compose -f docker-compose-ojsprod.yml -p "$1" up -d
+        docker network connect $compose_network ojsprod_app_ulb
 fi
