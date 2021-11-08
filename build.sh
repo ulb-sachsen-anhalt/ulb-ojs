@@ -2,24 +2,24 @@
 
 set -eu
 
-if [ $# -ne 3 ]
+if [ $# -ne 2 ]
   then
-    echo "Please pass PWD DB, PWD SMTP, TARGET={'dev', 'prod'} as args"
+    echo "Please pass PWD SMTP, TARGET={'dev', 'prod'} as args"
     exit 0
 fi
 
 
-DB_PASS=$1
-SMTP_PASS=$2
-TARGET=$3
+DB_PASS='ojs'
+SMTP_PASS=$1
+TARGET=$2
 
 source .env
 
-if  [ -z "$TARGET" ] || ([ "$TARGET" != "dev" ] && [ "$TARGET" != "prod" ] && [ "$TARGET" != "local" ])
+if  [ -z "$TARGET" ] || ([ "$TARGET" != "dev" ] && [ "$TARGET" != "prod" ])
     then
-        echo "Parameter 'dev' oder 'prod' oder 'local' fehlt"
+        echo "second parameter must be 'dev' or 'prod'"
         exit 0
-elif [ "$TARGET" == "dev" ] || [ "$TARGET" == "local" ]
+elif [ "$TARGET" == "dev" ]
     then
         data_dir=${PROJECT_DATA_ROOT_DEV}
         echo "We are using ojs  Version: ${OJS_VERSION_ULB_PROD}"
@@ -68,6 +68,9 @@ cp -v ./resources/ojs"$TARGET".conf $data_dir/config/
 # copy our custom settings in php.custom.ini (increase memory_limit)
 cp -v ./resources/php.ulb.ini $data_dir/config/
 
+# copy favicon
+cp -v ./resources/favicon.ico $data_dir/config/favicon.ico
+
 OJS_HOME=$(find ./docker-ojs -type d -name ${OJS_VERSION})
 OJS_HOME=$OJS_HOME$PHP_TAIL
 if [ -z "$OJS_HOME" ] ; then echo "**OJS Version $VERSION not found!**";
@@ -86,7 +89,7 @@ cp -R $OJS_HOME/root .
 
 
 # replace Host variable if in development build
-if [ $TARGET == "dev" ] || [ $TARGET == "local" ]; then
+if [ $TARGET == "dev" ]; then
     # cp -v ./resources/ompdev.conf $data_dir/config/
     echo "reconfigure config file with sed: ojs.config.inc.php"
     sed -i "s/ojsprod_db_ulb/ojsdev_db_ulb/" "$data_dir"/config/ojs.config.inc.php
@@ -106,21 +109,10 @@ if [ $TARGET == "dev" ] || [ $TARGET == "local" ]; then
     sed -i "/ssl/d" ./docker-compose-ojslocal.yml
 fi
 
-echo try start docker-compose with docker-compose-ojs"$TARGET".yml
-
-compose_network=ojs
-
-docker network inspect $compose_network >/dev/null 2>&1 || \
-    docker network create $compose_network
-
-./stop-ojs "$TARGET"
-./start-ojs "$TARGET"
-
-docker network connect $compose_network ojs"$TARGET"_app_ulb
-
-# copy uni favicon
-docker cp ./resources/favicon.ico ojs"$TARGET"_app_ulb:/var/www/html/favicon.ico
-
+echo done....
+echo "now start with --> ./start-ojs {dev, local, prod}"
+echo you probably must stop running docker containers before!
+echo "try --> ./stop-ojs {dev, local, prod}"
 
 # backup database
 if [ "$TARGET" == "prod" ]; then
