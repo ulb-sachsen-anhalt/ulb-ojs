@@ -15,11 +15,11 @@ builddev-job:
     - sleep 10
     - >
       if [ $(curl -LIk https://publicdev.bibliothek.uni-halle.de/ -o /dev/null -w '%{http_code}\n' -s) != "200" ]; then
-        echo Development Server fails!;
+        echo Development Server fails!
         exit 1;
       else
         echo Development Server started successfully!;
-        echo now we restart Production Server;
+        echo We now restart Production Server;
       fi
 
 build-job:
