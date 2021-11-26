@@ -54,6 +54,9 @@ cp -r ./plugins/ulb_theme $data_dir/plugins
 
 # copy Search Results Highlight Plugin to /data/plugins
 cp -r ./plugins/searchMark $data_dir/plugins
+# copy RemoteUrl Plugin to /data/plugins
+cp -rv ./plugins/setRemoteUrlPlugin $data_dir/plugins
+
 
 # pleased do: sudo chown 100:101 -R $data_dir/plugins
 
