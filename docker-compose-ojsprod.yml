@@ -56,6 +56,7 @@ services:
       # ULB custom made plugins
       - /data/ojsdev/plugins/ulb_theme:/var/www/html/plugins/themes/ulb_theme
       - /data/ojsdev/plugins/searchMark:/var/www/html/plugins/generic/searchMark
+      - /data/ojsdev/plugins/setRemoteUrlPlugin:/var/www/html/plugins/generic/setRemoteUrlPlugin
       - /data/ojsprod/config/favicon.ico:/var/www/html/favicon.ico
 
 #      # WARNING: You can only enable file-volumes if file exists in the container.
