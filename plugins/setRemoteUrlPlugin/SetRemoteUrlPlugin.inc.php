@@ -14,91 +14,91 @@ class SetRemoteUrlPlugin extends GenericPlugin {
     public function register($category, $path, $mainContextId = NULL) {
         $success = parent::register($category, $path);
         if ($success && $this->getEnabled()) {
-                HookRegistry::register('TemplateManager::display', array($this, 'displayTemplateCallback'));
+                HookRegistry::register('TemplateManager::display', array($this, 'setRemoteUrl'));
             }
         return $success;
         }
 
-        public function displayTemplateCallback($hookName, $args) {
-            $galleyDao = DAORegistry::getDAO('ArticleGalleyDAO');
-            $template =& $args[1];
-            $request = Application::get()->getRequest();
-            if ($template != 'frontend/pages/indexSite.tpl') return false;
-            $remote_url=null;
-            $publication_id=null;
-            $queryarray = $request->getQueryArray();
-            foreach($queryarray as $key => $value) {
-                if ($key == 'publication_id') $publication_id=$value;
-                if ($key == 'remote_url') $remote_url=$value;
-                }
-            $results = $galleyDao->retrieve(
-                "update publication_galleys set remote_url=? where publication_id=?",
-                [$remote_url, $publication_id]
-                );
-            foreach ($results as $g) {}
-            return false;
+    public function setRemoteUrl($hookName, $args) {
+        $galleyDao = DAORegistry::getDAO('ArticleGalleyDAO');
+        $template =& $args[1];
+        $request = Application::get()->getRequest();
+        if ($template != 'frontend/pages/indexSite.tpl') return false;
+        $remote_url=null;
+        $publication_id=null;
+        $queryarray = $request->getQueryArray();
+        foreach($queryarray as $key => $value) {
+            if ($key == 'publication_id') $publication_id=$value;
+            if ($key == 'remote_url') $remote_url=$value;
             }
-
-        public function getActions($request, $actionArgs) {
-            $actions = parent::getActions($request, $actionArgs);
-            if (!$this->getEnabled()) {
-                return $actions;
-               }
-        
-            $router = $request->getRouter();
-            import('lib.pkp.classes.linkAction.request.AjaxModal');
-            $linkAction = new LinkAction(
-                'settings',
-                new AjaxModal(
-                    $router->url(
-                        $request,
-                        null,
-                        null,
-                        'manage',
-                        null,
-                        array(
-                            'verb' => 'settings',
-                            'plugin' => $this->getName(),
-                            'category' => 'generic'
-                        )
-                    ),
-                    $this->getDisplayName()
-                ),
-                __('manager.plugins.settings'),
-                null
+        $results = $galleyDao->retrieve(
+            "update publication_galleys set remote_url=? where publication_id=?",
+            [$remote_url, $publication_id]
             );
-            array_unshift($actions, $linkAction);
+        foreach ($results as $g) {}
+        return false;
+        }
+
+    public function getActions($request, $actionArgs) {
+        $actions = parent::getActions($request, $actionArgs);
+        if (!$this->getEnabled()) {
             return $actions;
-            }        
-
-        public function manage($args, $request) {
-            switch ($request->getUserVar('verb')) {
-            case 'settings':
-            $this->import('SetRemoteUrlSettingsForm');
-            $form = new SetRemoteUrlSettingsForm($this);
-            if (!$request->getUserVar('save')) {
-                $form->initData();
-                    return new JSONMessage(true, $form->fetch($request));
-                }
-            $form->readInputData();
-            if ($form->validate()) {
-                $form->execute();
-                return new JSONMessage(true);
-                }
             }
-            return parent::manage($args, $request);
-        }
+    
+        $router = $request->getRouter();
+        import('lib.pkp.classes.linkAction.request.AjaxModal');
+        $linkAction = new LinkAction(
+            'settings',
+            new AjaxModal(
+                $router->url(
+                    $request,
+                    null,
+                    null,
+                    'manage',
+                    null,
+                    array(
+                        'verb' => 'settings',
+                        'plugin' => $this->getName(),
+                        'category' => 'generic'
+                    )
+                ),
+                $this->getDisplayName()
+            ),
+            __('manager.plugins.settings'),
+            null
+        );
+        array_unshift($actions, $linkAction);
+        return $actions;
+        }        
 
-        public function getDisplayName() {
-            return __('plugins.generic.remote_url.name');
+    public function manage($args, $request) {
+        switch ($request->getUserVar('verb')) {
+        case 'settings':
+        $this->import('SetRemoteUrlSettingsForm');
+        $form = new SetRemoteUrlSettingsForm($this);
+        if (!$request->getUserVar('save')) {
+            $form->initData();
+                return new JSONMessage(true, $form->fetch($request));
+            }
+        $form->readInputData();
+        if ($form->validate()) {
+            $form->execute();
+            return new JSONMessage(true);
+            }
         }
+        return parent::manage($args, $request);
+    }
 
-        public function getDescription() {
-            return __('plugins.generic.remote_url.description');
-        }
+    public function getDisplayName() {
+        return __('plugins.generic.remote_url.name');
+    }
 
-        public function isSitePlugin() {
-            return !Application::get()->getRequest()->getContext();
-        }
+    public function getDescription() {
+        return __('plugins.generic.remote_url.description');
+    }
+
+    public function isSitePlugin() {
+        return !Application::get()->getRequest()->getContext();
+    }
 }
 ?>
