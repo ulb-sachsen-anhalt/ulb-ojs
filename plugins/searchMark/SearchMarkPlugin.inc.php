@@ -22,6 +22,14 @@ class SearchMarkPlugin extends GenericPlugin {
     }
 
 	public function displayTemplateCallback($hookName, $args) {
+
+		//$galleyDao = DAORegistry::getDAO('ArticleGalleyDAO'); /* @var $galleyDao ArticleGalleyDAO */
+		//    error_log("Die Klasse:1111111111111111   ".$g->remote_url);
+		//} 
+		//$results = $galleyDao->retrieve("update publication_galleys set remote_url=? where galley_id=1832", ['xxx']); 
+		//foreach ($results as $g) {  }
+
+
 		$templateMgr =& $args[0];
 		$template =& $args[1];
 		$request = Application::get()->getRequest();
