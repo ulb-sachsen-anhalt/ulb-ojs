@@ -18,7 +18,7 @@ class SetRemoteUrlPlugin extends GenericPlugin {
             }
         return $success;
         }
-
+        
     public function setRemoteUrl($hookName, $args) {
         $galleyDao = DAORegistry::getDAO('ArticleGalleyDAO');
         $template =& $args[1];
@@ -30,13 +30,24 @@ class SetRemoteUrlPlugin extends GenericPlugin {
         foreach($queryarray as $key => $value) {
             if ($key == 'publication_id') $publication_id=$value;
             if ($key == 'remote_url') $remote_url=$value;
+            if ($key == 'token') $token=$value;    
             }
+        if($token==null) {
+            error_log('ERROR, token missing');
+            return false;
+            }
+        if($token!=$this->getSetting(42, 'token')) {
+            error_log('ERROR, token given, but not maching');
+            return false;
+            }
+        // ok, everything matches
+        // we'll write new remote_url    
         $results = $galleyDao->retrieve(
             "update publication_galleys set remote_url=? where publication_id=?",
             [$remote_url, $publication_id]
             );
         foreach ($results as $g) {}
-        return false;
+        return true;
         }
 
     public function getActions($request, $actionArgs) {
@@ -73,18 +84,18 @@ class SetRemoteUrlPlugin extends GenericPlugin {
 
     public function manage($args, $request) {
         switch ($request->getUserVar('verb')) {
-        case 'settings':
-        $this->import('SetRemoteUrlSettingsForm');
-        $form = new SetRemoteUrlSettingsForm($this);
-        if (!$request->getUserVar('save')) {
-            $form->initData();
-                return new JSONMessage(true, $form->fetch($request));
-            }
-        $form->readInputData();
-        if ($form->validate()) {
-            $form->execute();
-            return new JSONMessage(true);
-            }
+            case 'settings':
+                $this->import('SetRemoteUrlSettingsForm');
+                $form = new SetRemoteUrlSettingsForm($this);
+                if (!$request->getUserVar('save')) {
+                    $form->initData();
+                        return new JSONMessage(true, $form->fetch($request));
+                    }
+                $form->readInputData();
+                if ($form->validate()) {
+                    $form->execute();
+                    return new JSONMessage(true);
+                    }
         }
         return parent::manage($args, $request);
     }
