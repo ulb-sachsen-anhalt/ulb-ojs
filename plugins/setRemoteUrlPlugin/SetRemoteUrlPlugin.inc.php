@@ -26,18 +26,20 @@ class SetRemoteUrlPlugin extends GenericPlugin {
         if ($template != 'frontend/pages/indexSite.tpl') return false;
         $remote_url=null;
         $publication_id=null;
+        $token=null;
         $queryarray = $request->getQueryArray();
         foreach($queryarray as $key => $value) {
+            error_log($key."=".$value);
             if ($key == 'publication_id') $publication_id=$value;
             if ($key == 'remote_url') $remote_url=$value;
             if ($key == 'token') $token=$value;    
             }
         if($token==null) {
-            error_log('ERROR, token missing');
+            error_log('[ERROR] token missing');
             return false;
             }
         if($token!=$this->getSetting(42, 'token')) {
-            error_log('ERROR, token given, but not maching');
+            error_log('[ERROR] token given, but not correct. Check Plugin settings');
             return false;
             }
         // ok, everything matches
