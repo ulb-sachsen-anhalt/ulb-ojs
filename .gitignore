@@ -4,3 +4,5 @@ Dockerfile
 ojs.config.inc.php.original.donotcommit
 ojs.*
 exclude.list
+docker-compose-ojslocal.yml
+docker-compose-ojsdev.yml
