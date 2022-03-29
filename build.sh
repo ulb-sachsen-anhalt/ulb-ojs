@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -eu
+set -e
 
 if [ $# -ne 2 ]
   then
@@ -54,6 +54,7 @@ cp -r ./plugins/ulb_theme $data_dir/plugins
 
 # copy Search Results Highlight Plugin to /data/plugins
 cp -r ./plugins/searchMark $data_dir/plugins
+
 # copy RemoteUrl Plugin to /data/plugins
 cp -rv ./plugins/setRemoteUrlPlugin $data_dir/plugins
 
@@ -66,7 +67,7 @@ if [ "$TARGET" == "prod" ]; then
 fi
 
 # place Apache configuration file for VirtualHost 
-cp -v ./resources/ojs"$TARGET".conf $data_dir/config/
+cp -v ./resources/*.conf $data_dir/config/
 
 # copy our custom settings in php.custom.ini (increase memory_limit)
 cp -v ./resources/php.ulb.ini $data_dir/config/
@@ -75,9 +76,11 @@ cp -v ./resources/php.ulb.ini $data_dir/config/
 cp -v ./resources/favicon.ico $data_dir/config/favicon.ico
 
 OJS_HOME=$(find ./docker-ojs -type d -name ${OJS_VERSION})
-OJS_HOME=$OJS_HOME$PHP_TAIL
-if [ -z "$OJS_HOME" ] ; then echo "**OJS Version $VERSION not found!**";
+
+if [ -z "$OJS_HOME" ] ; then 
+         echo "**OJS Version $OJS_VERSION not found!**"; echo EXIT; exit 1;
     else echo "Version '$OJS_VERSION' found --> $OJS_HOME"; fi
+OJS_HOME=$OJS_HOME$PHP_TAIL
 
 echo copy $OJS_HOME/Dockerfile .
 cp -v $OJS_HOME/Dockerfile .
@@ -93,9 +96,10 @@ cp -R $OJS_HOME/root .
 
 # replace Host variable if in development build
 if [ $TARGET == "dev" ]; then
-    # cp -v ./resources/ompdev.conf $data_dir/config/
-    echo "reconfigure config file with sed: ojs.config.inc.php"
+    # cp -v ./resources/ojsdev.conf $data_dir/config/
+    echo "reconfigure config file with sed: $data_dir"/config/ojs.config.inc.php
     sed -i "s/ojsprod_db_ulb/ojsdev_db_ulb/" "$data_dir"/config/ojs.config.inc.php
+    sed -i "s/force_login_ssl/;force_login_ssl/" "$data_dir"/config/ojs.config.inc.php
     sed -i "s/force_ssl/;force_ssl/" "$data_dir"/config/ojs.config.inc.php
     echo "copy and reconfigure develop compose file with sed: docker-compose-ojsdev-ulb.yml"
     cp -v ./docker-compose-ojsprod.yml ./docker-compose-ojsdev.yml
@@ -110,17 +114,22 @@ if [ $TARGET == "dev" ]; then
     # for local development we don't need ssl  
     sed -i "/443:443/d" ./docker-compose-ojslocal.yml
     sed -i "/ssl/d" ./docker-compose-ojslocal.yml
+    sed -i "s/ojsdev\.conf/ojslocal\.conf/" ./docker-compose-ojslocal.yml
+    sed -i "s/ojsdev_app_ulb/ojslocal_app_ulb/" ./docker-compose-ojslocal.yml
+
+
 fi
 
 echo done....
 echo "now start with --> ./start-ojs {dev, local, prod}"
 echo you probably must stop running docker containers before!
 echo "try --> ./stop-ojs {dev, local, prod}"
+echo "now try start ojs ./start-ojs  {dev, local, prod}"
 
 # backup database
 if [ "$TARGET" == "prod" ]; then
-    echo dump OJS database $data_dir/sqldumps/$(date +"%Y-%m-%d")_${OJS_VERSION}_ojs.sql
     backup=$data_dir/sqldumps/$(date +"%Y-%m-%d")_${OJS_VERSION}_ojs
+    echo dump OJS database $backup.sql
     docker exec ojs"$TARGET"_db_ulb mysqldump -p${DB_PASS} ojs > $backup && \
         echo "backup successfull:" $(du -h "$backup") && mv "$backup" "$backup".sql || \
         if [ -f "$backup" ]; then 
