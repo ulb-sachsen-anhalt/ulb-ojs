@@ -13,7 +13,7 @@ elif [ "$1" == "dev" ] ||  [ "$1" == "local" ]
     then
         echo "start docker-compose with docker-compose-ojs$1.yml"
         docker-compose -f docker-compose-ojs"$1".yml -p "$1" up -d
-        docker network connect $compose_network ojsdev_app_ulb
+        docker network connect $compose_network ojs$1_app_ulb
 
 elif [ $1 == "prod" ]
     then
