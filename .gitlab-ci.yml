@@ -28,8 +28,7 @@ builddev-job:
 build-job:
   stage: build
 
-  needs:
-    - builddev-job
+  needs: ["builddev-job"]
 
   tags:
     - ulb-ojs
