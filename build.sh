@@ -9,7 +9,6 @@ if [ $# -ne 2 ]
 fi
 
 
-DB_PASS='ojs'
 SMTP_PASS=$1
 TARGET=$2
 
