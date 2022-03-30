@@ -51,7 +51,7 @@ cp -v ./resources/ojs.config.inc.php $data_dir/config/
 
 # copy Plugins to /data/plugins
 echo "copy plugins -->" $(ls plugins)
-cp -r ./plugins $data_dir/plugins
+cp -r ./plugins/* $data_dir/plugins
 
 
 # pleased do: sudo chown 100:101 -R $data_dir/plugins
