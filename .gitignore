@@ -6,3 +6,4 @@ ojs.*
 exclude.list
 docker-compose-ojslocal.yml
 docker-compose-ojsdev.yml
+settings.json
