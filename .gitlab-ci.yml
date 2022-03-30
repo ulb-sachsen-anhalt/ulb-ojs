@@ -1,9 +1,9 @@
-variables:
-    GIT_SUBMODULE_STRATEGY: recursive
-
 stages:
     - build_dev
     - build    
+
+variables:
+    GIT_SUBMODULE_STRATEGY: recursive
 
 builddev-job:
   stage: build_dev
