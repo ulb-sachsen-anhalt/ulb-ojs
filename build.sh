@@ -126,6 +126,7 @@ echo "now try start ojs ./start-ojs  {dev, local, prod}"
 if [ "$TARGET" == "prod" ]; then
     backup=$data_dir/sqldumps/$(date +"%Y-%m-%d")_${OJS_VERSION}_ojs
     echo dump OJS database $backup.sql
+    echo "docker exec ojs"$TARGET"_db_ulb mysqldump -p${DB_PASS} ojs > $backup"
     docker exec ojs"$TARGET"_db_ulb mysqldump -p${DB_PASS} ojs > $backup && \
         echo "backup successfull:" $(du -h "$backup") && mv "$backup" "$backup".sql || \
         if [ -f "$backup" ]; then 
