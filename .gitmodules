@@ -1,10 +1,11 @@
 
+[submodule "docker-ojs"]
+	branch=main
+	path = docker-ojs
+	url = https://github.com/pkp/docker-ojs.git
 [submodule "plugins/ulb-theme"]
 	path = plugins/ulb-theme
 	url = git@git.itz.uni-halle.de:ulb/ulb-theme.git
-[submodule "docker-ojs"]
-	path = docker-ojs
-	url = https://github.com/pkp/docker-ojs.git
 [submodule "plugins/searchMarkPlugin"]
 	path = plugins/searchMarkPlugin
 	url = git@git.itz.uni-halle.de:ulb/searchMarkPlugin.git

@@ -25,8 +25,6 @@ services:
       - /data/ojsdev/db:/var/lib/mysql
       - /data/ojsdev/logs/db:/var/log/mysql
       - ./resources/mariadb.cnf:/etc/mysql/conf.d/mariadb.cnf
-#      - ./config/db.charset.conf:/etc/mysql/conf.d/charset.cnf
-#      - ./migration:/docker-entrypoint-initdb.d
     networks:
       - inside
     restart: always
@@ -37,7 +35,7 @@ services:
     image: ojs:${OJS_VERSION_ULB_DEV}
     env_file:
       - .env
-    container_name: "ojsdev_app_ulb"
+    container_name: "ojslocal_app_ulb"
     hostname: "${COMPOSE_PROJECT_NAME}"
     restart: always
     ports:
@@ -49,11 +47,12 @@ services:
       - /data/ojsdev/logs/app:/var/log/apache2
       - /data/ojsdev/config/ojs.config.inc.php:/var/www/html/config.inc.php:ro
       - /data/ojsdev/config/php.ulb.ini:/etc/php7/conf.d/php.ulb.ini:ro
-      - /data/ojsdev/config/ojsdev.conf:/etc/apache2/conf.d/ojs.conf:ro
+      - /data/ojsdev/config/ojslocal.conf:/etc/apache2/conf.d/ojs.conf:ro
       # ULB custom made plugins
-      - /data/ojsdev/plugins/ulb_theme:/var/www/html/plugins/themes/ulb_theme
-      - /data/ojsdev/plugins/searchMark:/var/www/html/plugins/generic/searchMark
-      # - /data/ojsdev/config/favicon.ico:/var/www/html/favicon.ico
+      - /data/ojsdev/plugins/ulb-theme:/var/www/html/plugins/themes/ulb-theme
+      - /data/ojsdev/plugins/searchMarkPlugin:/var/www/html/plugins/generic/searchMarkPlugin
+      - /data/ojsdev/plugins/setRemoteUrlPlugin:/var/www/html/plugins/generic/setRemoteUrlPlugin
+      - /data/ojsdev/config/favicon.ico:/var/www/html/favicon.ico
 
 #      # WARNING: You can only enable file-volumes if file exists in the container.
 #      - ./config/apache.htaccess:/var/www/html/.htaccess

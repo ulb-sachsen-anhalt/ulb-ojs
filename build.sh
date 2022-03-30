@@ -49,14 +49,9 @@ echo propagate new version of \"ojs.config.inc.php\"
 
 cp -v ./resources/ojs.config.inc.php $data_dir/config/
 
-# copy custom ULB-theme to /data/plugins
-cp -r ./plugins/ulb_theme $data_dir/plugins
-
-# copy Search Results Highlight Plugin to /data/plugins
-cp -r ./plugins/searchMark $data_dir/plugins
-
-# copy RemoteUrl Plugin to /data/plugins
-cp -rv ./plugins/setRemoteUrlPlugin $data_dir/plugins
+# copy Plugins to /data/plugins
+echo "copy plugins -->" $(ls plugins)
+cp -r ./plugins $data_dir/plugins
 
 
 # pleased do: sudo chown 100:101 -R $data_dir/plugins
@@ -67,7 +62,8 @@ if [ "$TARGET" == "prod" ]; then
 fi
 
 # place Apache configuration file for VirtualHost 
-cp -v ./resources/*.conf $data_dir/config/
+echo "copy resources -->" $(ls resources)
+cp ./resources/*.conf $data_dir/config/
 
 # copy our custom settings in php.custom.ini (increase memory_limit)
 cp -v ./resources/php.ulb.ini $data_dir/config/

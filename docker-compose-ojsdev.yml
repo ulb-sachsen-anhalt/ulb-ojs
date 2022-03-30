@@ -49,8 +49,8 @@ services:
       - /data/ojsdev/config/ssl/ojs.pem:/etc/ssl/apache2/server.pem:ro
       - /data/ojsdev/config/ssl/ojs.key:/etc/ssl/apache2/server.key:ro
       # ULB custom made plugins
-      - /data/ojsdev/plugins/ulb_theme:/var/www/html/plugins/themes/ulb_theme
-      - /data/ojsdev/plugins/searchMark:/var/www/html/plugins/generic/searchMark
+      - /data/ojsdev/plugins/ulb-theme:/var/www/html/plugins/themes/ulb-theme
+      - /data/ojsdev/plugins/searchMarkPlugin:/var/www/html/plugins/generic/searchMarkPlugin
       - /data/ojsdev/plugins/setRemoteUrlPlugin:/var/www/html/plugins/generic/setRemoteUrlPlugin
       - /data/ojsdev/config/favicon.ico:/var/www/html/favicon.ico
 
