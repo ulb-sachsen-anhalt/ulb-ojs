@@ -36,3 +36,5 @@ build-job:
   script:
     - echo "Install OJS PRODUCTION"
     - ./build.sh $SMTP_PASS prod
+    - ./stop-ojs prod
+    - ./start-ojs prod    
