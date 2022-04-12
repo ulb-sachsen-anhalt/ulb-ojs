@@ -16,6 +16,9 @@ configure  _.env_  and _docker-compose-ojsprod.yml_  (host, port, pwd, etc.)
 
 First we need to create all directories, 
 referenced as volume form _docker-compose-ompdev.yml_
+OJS data are located in
+_/data/ojsprod_ and _/data/ojsdev_
+
 ```bash
 /data/ojsdev/config
 /data/ojsdev/db
@@ -41,35 +44,11 @@ container ojs_dbdev_ulb:
  uid=999(mysql) gid=999(mysql) groups=999(mysql)
 ```
 
-OJS data are located in
-
-_/data/ojsprod_ and _/data/ojsdev_
-
-_uid_ and _gid_ of directories should correspondent within the container ids
-
-e.g.: container ojsdev_app_ulb / ojsprod_app_ulb:
-<pre>
- >id apache   
- >uid=100(apache) gid=101(apache) groups=101(apache),82(www-data),101(apache)
-</pre>
-
 So set appropriate on host machine:
 <pre>
-sudo chown 100:101  /data/ojsprod/ -R
-sudo chown 100:101  /data/ojsdev/ -R
-</pre>
-
-
-container ojsprod_db_ulb or ojsdev_db_ulb:
-<pre>
- >id mysql  
- >uid=999(mysql) gid=999(mysql) groups=999(mysql)
-</pre>
-
-Host:
-<pre>
-sudo chown 999:999  /data/ojs{&lt;prod&gt;,&lt;dev&gt;}/logs/db -R 
-sudo chown 999:999  /data/ojs{&lt;prod&gt;,&lt;dev&gt;}db -R 
+sudo chown 100:100  /data/ojsdev/ -R
+sudo chown 999:999  /data/ojsdev/logs/db -R 
+sudo chown 999:999  /data/ojsdev/db -R 
 </pre>
 
 From your clone directory start ```./build.sh```
