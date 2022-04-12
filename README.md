@@ -1,71 +1,66 @@
 # OJS Server ULB
 
-[![pipeline status](https://git.itz.uni-halle.de/ulb/ulb-ojs/badges/master/pipeline.svg)](https://git.itz.uni-halle.de/ulb/ulb-ojs/badges/master/pipeline.svg)
 
 
 OJS install pipeline
 
 
-git, gitlab-runner, docker, docker-ojs auf Server installieren 
-Runner configurieren
+install git, gitlab-runner, docker on server, 
+configure gitlab runner
 
-ojs.config.inc.php (host, port pwd, mail, etc) Anpassen!
+configure _./resources/ojs.config.inc.php_ (host, port pwd, mail, etc.)
 
-docker-ojs-ulb.yml  (host, port, pwd, etc) Anpassen!
+configure  _.env_  and _docker-compose-ojsprod.yml_  (host, port, pwd, etc.)
 
-TODO: 
+## Setup enviroment
 
-- Daten in /home/ojs/ ablegen &#10003;
-- Datenbank update &#10003;
-- upgrade OJS von 3.1.1.2(aktuell) auf 3_3_0_6 &#10003;
+First we need to create all directories, 
+referenced as volume form _docker-compose-ompdev.yml_
+```bash
+/data/ojsdev/config
+/data/ojsdev/db
+/data/ojsdev/files
+/data/ojsdev/logs
+/data/ojsdev/plugins
+/data/ojsdev/private
+/data/ojsdev/public
 
+```
+(same for _docker-compose-ojsprod.yml_)
 
-https://github.com/pkp/ojs/blob/main/docs/UPGRADE.md
+_uid_ and _gid_ of directories should correspondent within the container ids
 
+e.g.: container ojs_app_ulb
+```bash
+ $ id apache   
+ uid=100(apache) gid=101(apache) groups=101(apache),82(www-data),101(apache)
+```
+container ojs_dbdev_ulb:
+```bash
+ $ id mysql  
+ uid=999(mysql) gid=999(mysql) groups=999(mysql)
+```
 
-einmaliges upgrade auf neueste Version:
+OJS data are located in
 
-in der .env alle Versionen auskommentieren! (die Versionen werden im upgrade_ojs.sh gesetzt!)
+_/data/ojsprod_ and _/data/ojsdev_
 
-<pre>
-sudo mysqldump ojs > /tmp/ojs.sql
-cp /tmp/ojs.sql /data/ojs/sqldump
-cp -aur /home/ojs/journals/ /data/ojs/public/
-</pre>
+_uid_ and _gid_ of directories should correspondent within the container ids
 
-die Journalbilder/Sitebilder liegen unter /srv/ojs/public/
-
-"private" liegt unter /home/ojs/journals
-
-<pre>
-cp -aur /srv/ojs/public/journals/ /data/ojs/public/
-cp -aur /srv/ojs/public/site/ /data/ojs/public/
-cp -aur /home/ojs/journals/ /data/ojs/private/
-</pre>
-
-./upgrade_ojs.sh &#10003;
-
-OJS Daten liegen nun in 
-
-_/data/ojsprod_ bzw. _/data/ojsdev_
-
-Die Besitzer hier entsprechen den uid/gid im entspr. Container.
-Da diese Ordner/Unterordner von den Containern eingebunden werden, sollten diese Rechte analog gesetzt werden:
-
-Im Container ojsdev_app_ulb / ojsprod_app_ulb:
+e.g.: container ojsdev_app_ulb / ojsprod_app_ulb:
 <pre>
  >id apache   
  >uid=100(apache) gid=101(apache) groups=101(apache),82(www-data),101(apache)
 </pre>
 
-Host:
+So set appropriate on host machine:
 <pre>
 sudo chown 100:101  /data/ojsprod/ -R
 sudo chown 100:101  /data/ojsdev/ -R
 </pre>
 
 
-Im container ojsprod_db_ulb bzw. ojsdev_db_ulb:
+container ojsprod_db_ulb or ojsdev_db_ulb:
 <pre>
  >id mysql  
  >uid=999(mysql) gid=999(mysql) groups=999(mysql)
@@ -77,7 +72,30 @@ sudo chown 999:999  /data/ojs{&lt;prod&gt;,&lt;dev&gt;}/logs/db -R
 sudo chown 999:999  /data/ojs{&lt;prod&gt;,&lt;dev&gt;}db -R 
 </pre>
 
+From your clone directory start ```./build.sh```
+
+This will setup all data for you to start docker container in _developent, production_ or _local_ mode.
+(There is probably some extra work if you start form scratch.)
+
+To start container use start and stop scripts:
+```bash
+./start-ojs local
+./stop-ojs local
+```
+
+Please check _.env_ for further settings!
+
+## GitLab CI/CD
+
+If you are working with gitlab you can use the .```gitlab-ci.yml``` to fire up your gitlab-runner. 
 
 
+
+## License
+
+GPL3
+
+
+## further information
 
 https://typeset.io/resources/the-a-z-of-open-journal-systems-ojs-3-user-guide/
