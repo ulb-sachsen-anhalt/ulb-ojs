@@ -75,6 +75,6 @@ If you are working with gitlab you can use the .```gitlab-ci.yml``` to fire up y
 GPL3
 
 
-## further information
+## Further information
 
 https://typeset.io/resources/the-a-z-of-open-journal-systems-ojs-3-user-guide/
