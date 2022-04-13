@@ -29,7 +29,6 @@ _/data/ojsprod_ and _/data/ojsdev_
 /data/ojsdev/public
 
 ```
-(same for _docker-compose-ojsprod.yml_)
 
 _uid_ and _gid_ of directories should correspondent within the container ids
 
@@ -46,7 +45,7 @@ container ojs_dbdev_ulb:
 
 So set appropriate on host machine:
 <pre>
-sudo chown 100:100  /data/ojsdev/ -R
+sudo chown 100:101  /data/ojsdev/ -R
 sudo chown 999:999  /data/ojsdev/logs/db -R 
 sudo chown 999:999  /data/ojsdev/db -R 
 </pre>
