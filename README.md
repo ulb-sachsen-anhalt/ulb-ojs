@@ -1,6 +1,9 @@
 # OJS Server ULB
 
 
+In order to streamline the development for our OJS and OMP applications and to ease the deployment of ready-to-go code from our test environment onto our productive environment, we have decided to use Docker. 
+
+What follows is an outline of the steps necessary to run an OJS installation in a Docker container:
 
 OJS install pipeline
 
@@ -12,7 +15,7 @@ configure _./resources/ojs.config.inc.php_ (host, port pwd, mail, etc.)
 
 configure  _.env_  and _docker-compose-ojsprod.yml_  (host, port, pwd, etc.)
 
-## Setup enviroment
+## Setup environment
 
 First we need to create all directories, 
 referenced as volume form _docker-compose-ompdev.yml_
@@ -30,7 +33,7 @@ _/data/ojsprod_ and _/data/ojsdev_
 
 ```
 
-_uid_ and _gid_ of directories should correspondent within the container ids
+_uid_ and _gid_ of directories should correspond within the container ids
 
 e.g.: container ojs_app_ulb
 ```bash
@@ -52,8 +55,8 @@ sudo chown 999:999  /data/ojsdev/db -R
 
 From your clone directory start ```./build.sh```
 
-This will setup all data for you to start docker container in _developent, production_ or _local_ mode.
-(There is probably some extra work if you start form scratch.)
+This will setup all data for you to start the docker container in _developent, production_ or _local_ mode.
+(There is probably some extra work if you start from scratch.)
 
 To start container use start and stop scripts:
 ```bash
